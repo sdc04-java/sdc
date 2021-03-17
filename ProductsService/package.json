@@ -1,0 +1,20 @@
+{
+  "name": "productsservice",
+  "version": "1.0.0",
+  "description": "SDC Team Java Products Service",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./server/index.js",
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VioletGlen/sdc.git"
+  },
+  "author": "VioletGlen",
+  "license": "ISC",
+  "homepage": "https://github.com/VioletGlen/sdc#readme",
+  "dependencies": {
+    "nodemon": "^2.0.7",
+  }
+}
