@@ -2,9 +2,9 @@
   "name": "qaservice",
   "version": "0.0.1",
   "description": "SDC Team Java Questions & Answers Service",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "node index.js",
+    "start": "node app.js",
     "parser": "node csvParser.js"
   },
   "repository": {
@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/miklbarton/sdc#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-promise-router": "^4.0.1",
     "pg": "^8.5.1"
   },
   "devDependencies": {
