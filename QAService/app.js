@@ -16,6 +16,8 @@ app.use(
   }),
 );
 
+app.use(express.json());
+
 app.listen(port, () => {
   console.log('Express server is listening on port', port);
 });
