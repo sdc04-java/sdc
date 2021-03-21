@@ -2,5 +2,5 @@
 node_modules/
 
 #data
-.csv
-.Identifier
+*.csv
+*.Identifier
