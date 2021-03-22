@@ -1,4 +1,5 @@
 const express = require("express");
+const db = require("../database/db");
 
 const app = express();
 const port = 3030;
@@ -6,7 +7,9 @@ const port = 3030;
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('nice');
+  db.getAllReviews((results) => {
+    res.send(results);
+  })
 });
 
 app.listen(port, ()=> {
