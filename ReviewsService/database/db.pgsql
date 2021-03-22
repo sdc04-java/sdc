@@ -17,7 +17,11 @@ Create TABLE ReviewsList (
   helpfulness int NOT NULL
 );
 
-COPY ReviewsList(review_id, product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness)
+Create TEMP TABLE tmpr AS SELECT * FROM ReviewsList LIMIT 0;
+
+COPY tmpr(review_id, product_id, rating, date, summary, body, recommend, reported, reviewer_name, reviewer_email, response, helpfulness)
 FROM '/home/dakinglee/hackreactor/sdc/ReviewsService/database/reviews.csv'
 DELIMITER ','
 CSV HEADER;
+
+INSERT INTO ReviewsList (review_id, product_id, rating, date, summary, body, recommend,reported, reviewer_name, reviewer_email, response, helpfulness) SELECT review_id, product_id, rating, date, summary, body, recommend,reported, reviewer_name, reviewer_email, response, helpfulness FROM tmpr;
