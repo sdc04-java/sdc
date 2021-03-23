@@ -1,4 +1,6 @@
-const { Pool } = require('pg');
+const { Pool, types } = require('pg');
+
+types.setTypeParser(1114, (stringValue) => stringValue);
 
 let pool;
 
@@ -32,10 +34,11 @@ const getDate = async () => {
 
 const listQuestions = async (product_id) => {
   try {
-    const res = await pool.query(
-      `SELECT question_id, question_body, question_date, asker_name, question_helpfulness, question_reported FROM sdc.questions
-      WHERE product_id = ${product_id}`,
-    );
+    const res = await pool.query(`
+      SELECT question_id, question_body, question_date, asker_name, question_helpfulness, question_reported FROM sdc.questions
+      WHERE product_id = ${product_id}
+      AND question_reported = 0
+    `);
     return res.rows;
   } catch (error) {
     return error;
@@ -44,10 +47,12 @@ const listQuestions = async (product_id) => {
 
 const listAnswers = async (question_id) => {
   try {
-    const res = await pool.query(
-      `SELECT answer_id, answer_body, answer_date, answerer_name, answer_helpfulness, answer_reported FROM sdc.answers
-      WHERE question_id = ${question_id}`,
-    );
+    const res = await pool.query(`
+      SELECT answer_id, answer_body, answer_date, answerer_name, answer_helpfulness, answer_reported
+      FROM sdc.answers
+      WHERE question_id = ${question_id}
+      AND answer_reported = 0
+    `);
     return res.rows;
   } catch (error) {
     return error;
@@ -56,10 +61,11 @@ const listAnswers = async (question_id) => {
 
 const listPhotos = async (answer_id) => {
   try {
-    const res = await pool.query(
-      `SELECT photo_id, photo_url FROM sdc.photos
-      WHERE answer_id = ${answer_id}`,
-    );
+    const res = await pool.query(`
+      SELECT photo_id, photo_url
+      FROM sdc.photos
+      WHERE answer_id = ${answer_id}
+    `);
     return res.rows;
   } catch (error) {
     return error;
@@ -68,69 +74,129 @@ const listPhotos = async (answer_id) => {
 
 const listAll = async (product_id) => {
   try {
-    const res = await pool.query(
-      `SELECT question_id, question_body, question_date, asker_name, question_helpfulness, question_reported  FROM sdc.questions
+    const res = await pool.query(`
+      SELECT question_id, question_body, question_date, asker_name, question_helpfulness, question_reported  FROM sdc.questions
       INNER JOIN sdc.answers
       ON sdc.questions.question_id = sdc.answers.question_id
       INNER JOIN sdc.photos
       ON sdc.answers.answer_id = sdc.photos.answer_id
-      WHERE product_id = ${product_id}`,
-    );
+      WHERE product_id = ${product_id}
+    `);
     return res.rows;
   } catch (error) {
     return error;
   }
 };
 
-const addQuestion = async () => {
+const addQuestion = async (product_id, question_body, question_date, asker_name, asker_email) => {
   try {
-    const res = await pool.query('');
-    return res.rows;
+    const max = await pool.query('SELECT MAX(sdc.questions.question_id) FROM sdc.questions');
+    const res = await pool.query(`
+    INSERT INTO sdc.questions
+    VALUES (
+      ${max.rows[0].max + 1},
+      ${product_id},
+      '${question_body}',
+      ${question_date},
+      '${asker_name}',
+      '${asker_email}',
+      0,
+      0
+    )
+    `);
+    return 'Question: Submitted';
   } catch (error) {
     return error;
   }
 };
 
-const addAnswer = async () => {
+const addAnswer = async (question_id, answer_body, answer_date, answerer_name, answerer_email) => {
   try {
-    const res = await pool.query('');
-    return res.rows;
+    const max = await pool.query('SELECT MAX(sdc.answers.answer_id) FROM sdc.answers');
+    const answer_id = max.rows[0].max + 1;
+    const res = await pool.query(`
+    INSERT INTO sdc.answers
+    VALUES (
+      ${answer_id},
+      ${question_id},
+      '${answer_body}',
+      ${answer_date},
+      '${answerer_name}',
+      '${answerer_email}',
+      0,
+      0
+    )
+    `);
+    return answer_id;
   } catch (error) {
     return error;
   }
 };
 
-const markQuestionHelpful = async () => {
+const addPhotos = async (answer_id, photo_url) => {
   try {
-    const res = await pool.query('');
-    return res.rows;
+    const max = await pool.query('SELECT MAX(sdc.photos.photo_id) FROM sdc.photos');
+    const res = await pool.query(`
+    INSERT INTO sdc.photos
+    VALUES (
+      ${max.rows[0].max + 1},
+      ${answer_id},
+      '${photo_url}'
+    )
+    `);
+    return 'Photos: Submitted';
   } catch (error) {
     return error;
   }
 };
 
-const reportQuestion = async () => {
+const markQuestionHelpful = async (question_id) => {
   try {
-    const res = await pool.query('');
-    return res.rows;
+    const res = await pool.query(`
+      UPDATE sdc.questions
+      SET question_helpfulness = question_helpfulness + 1
+      WHERE question_id = ${question_id}
+    `);
+    return 'Question: Marked as Helpful';
   } catch (error) {
     return error;
   }
 };
 
-const markAnswerHelpful = async () => {
+const reportQuestion = async (question_id) => {
   try {
-    const res = await pool.query('');
-    return res.rows;
+    const res = await pool.query(`
+      UPDATE sdc.questions
+      SET question_reported = 1
+      WHERE question_id = ${question_id}
+    `);
+    return 'Question: Reported';
   } catch (error) {
     return error;
   }
 };
 
-const reportAnswer = async () => {
+const markAnswerHelpful = async (answer_id) => {
   try {
-    const res = await pool.query('');
-    return res.rows;
+    const res = await pool.query(`
+      UPDATE sdc.answers
+      SET answer_helpfulness = answer_helpfulness + 1
+      WHERE answer_id = ${answer_id}
+    `);
+    return 'Answer: Marked as Helpful';
+  } catch (error) {
+    return error;
+  }
+};
+
+const reportAnswer = async (answer_id) => {
+  try {
+    const res = await pool.query(`
+      UPDATE sdc.answers
+      SET answer_reported = 1
+      WHERE answer_id = ${answer_id}
+    `);
+    return 'Answer: Reported';
   } catch (error) {
     return error;
   }
@@ -144,6 +210,7 @@ module.exports = {
   listAll,
   addQuestion,
   addAnswer,
+  addPhotos,
   markQuestionHelpful,
   reportQuestion,
   markAnswerHelpful,

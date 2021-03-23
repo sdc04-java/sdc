@@ -104,4 +104,7 @@ dist
 .tern-port
 
 # Postgres Data
-postgres-data
+data
+
+# CSV Files
+csv

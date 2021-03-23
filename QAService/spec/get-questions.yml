@@ -1,0 +1,26 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 1
+      arrivalRate: 1
+      name: Warm up
+    - duration: 5
+      arrivalRate: 2
+      rampTo: 2
+      name: Ramp up load
+    - duration: 10
+      arrivalRate: 3
+      name: Sustained load
+  payload:
+    # Load search keywords from an external CSV file and make them available
+    # to virtual user scenarios as variable "keywords":
+    path: "../csv/million.csv"
+    fields:
+      - "product_id"
+    # order: sequence
+scenarios:
+  # We define one scenario:
+  - name: "Get Questions"
+    flow:
+      - get:
+          url: "/qa/questions?product_id={{product_id}}&page=1&count=1"

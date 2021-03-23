@@ -4,13 +4,16 @@ const questionAnswers = async (input) => {
   try {
     const data = input;
     const answers = [];
+
     for (let i = 0; i < data.length; i += 1) {
       answers.push(db.listAnswers(data[i].question_id));
     }
+
     const allAnswers = await Promise.all(answers);
     for (let i = 0; i < data.length; i += 1) {
       data[i].answers = allAnswers[i];
     }
+
     return data;
   } catch (error) {
     return error;
@@ -20,11 +23,14 @@ const questionAnswers = async (input) => {
 const questionPhotos = async (input) => {
   try {
     const data = input;
+
     for (let j = 0; j < data.length; j += 1) {
       const photos = [];
+
       for (let i = 0; i < data[j].answers.length; i += 1) {
         photos.push(db.listPhotos(data[j].answers[i].answer_id));
       }
+
       const allPhotos = await Promise.all(photos);
       for (let i = 0; i < data[j].answers.length; i += 1) {
         data[j].answers[i].photos = allPhotos[i];
@@ -80,13 +86,16 @@ const answerPhotos = async (input) => {
   try {
     const data = input;
     const photos = [];
+
     for (let i = 0; i < data.length; i += 1) {
       photos.push(db.listPhotos(data[i].answer_id));
     }
+
     const allPhotos = await Promise.all(photos);
     for (let i = 0; i < data.length; i += 1) {
       data[i].photos = allPhotos[i];
     }
+
     return data;
   } catch (error) {
     return error;
@@ -122,10 +131,24 @@ const answerShaper = (input, id, page, count) => {
   return finalResult;
 };
 
+const photoPoster = async (answer_id, photos) => {
+  try {
+    const promises = [];
+    for (let i = 0; i < photos.length; i += 1) {
+      promises.push(db.addPhotos(answer_id, photos[i]));
+    }
+    const resolve = await Promise.all(promises);
+    return 'Photo: Submitted';
+  } catch (error) {
+    return error;
+  }
+};
+
 module.exports = {
   questionAnswers,
   questionPhotos,
   questionShaper,
   answerPhotos,
   answerShaper,
+  photoPoster,
 };
