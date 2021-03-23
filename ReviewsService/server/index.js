@@ -7,7 +7,8 @@ const port = 3030;
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  db.getAllReviews((results) => {
+  db.getAllReviews(12, (results) => {
+    console.log(results)
     res.send(results);
   })
 });
