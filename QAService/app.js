@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mountRoutes = require('./routes');
 
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 8080;
 
 const app = express();
 
