@@ -8,10 +8,10 @@ const pool = new Pool ({
   port: 5432
 });
 
-const getAllReviews = (product_id, cb) => {
-  pool.query("SELECT * FROM reviewslist LEFT JOIN review_photos ON reviewslist.review_id = review_photos.review_id WHERE product_id = 12")
+const getAllReviews = (obj, cb) => {
+  pool.query(`SELECT reviewslist.review_id, rating, summary, recommend, response, body, date, reviewer_name, helpfulness, review_photos.id, url FROM reviewslist LEFT JOIN review_photos ON reviewslist.review_id = review_photos.review_id WHERE product_id = ${obj.product_id}`)
   .then((results) => {
-    cb(results.rows);
+    cb(results.rows.slice(0, obj.count));
   })
   .catch((err) => {
     cb(err);
