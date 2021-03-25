@@ -11,10 +11,10 @@ if (process.env.DATABASE_URL) {
 } else {
   pool = new Pool({
     database: 'sdc',
-    // host: 'localhost',
-    // user: '$POSTGRES_USER',
+    host: 'ec2-3-141-45-51.us-east-2.compute.amazonaws.com',
+    user: 'postgres',
     // password: 'password',
-    // port: 5432,
+    port: 5432,
   });
 }
 
