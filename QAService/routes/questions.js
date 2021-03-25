@@ -27,7 +27,7 @@ router.route('/')
     // }
   // })
   .get((req,res) => {
-    res.status(200).send({'hey': 'hey'});
+    res.status(200).send({hey: 'hey'});
     })
   .post(async (req, res) => {
     try {
@@ -40,7 +40,7 @@ router.route('/')
       res.status(200).send(results);
     } catch (error) {
       console.error(error);
-      res.status(404).send(error);
+      res.status(404).send({hey: 'error'});
     }
   });
 
