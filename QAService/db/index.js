@@ -4,21 +4,25 @@ types.setTypeParser(1114, (stringValue) => stringValue);
 
 let pool;
 
-// const connectionString = 'postgresql://postgres:password@ec2-3-141-45-51.us-east-2.compute.amazonaws.com:5432/sdc';
+const connectionString = 'postgresql://postgres:password@3.141.45.51:5432/sdc';
 
-if (process.env.DATABASE_URL) {
-  pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-  });
-} else {
-  pool = new Pool({
-    database: 'sdc',
-    host: '3.141.45.51',
-    user: 'postgres',
-    password: 'password',
-    port: 5432,
-  });
-}
+const pool = new Pool({
+  connectionString,
+})
+
+// if (process.env.DATABASE_URL) {
+//   pool = new Pool({
+//     connectionString: process.env.DATABASE_URL,
+//   });
+// } else {
+//   pool = new Pool({
+//     database: 'sdc',
+//     host: '3.141.45.51',
+//     user: 'postgres',
+//     password: 'password',
+//     port: 5432,
+//   });
+// }
 
 pool.on('error', (error, client) => {
   console.error('Unexpected error on idle client', error);
