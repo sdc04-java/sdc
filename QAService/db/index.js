@@ -4,6 +4,8 @@ types.setTypeParser(1114, (stringValue) => stringValue);
 
 let pool;
 
+// const connectionString = 'postgresql://postgres:password@ec2-3-141-45-51.us-east-2.compute.amazonaws.com:5432/sdc';
+
 if (process.env.DATABASE_URL) {
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
@@ -11,9 +13,9 @@ if (process.env.DATABASE_URL) {
 } else {
   pool = new Pool({
     database: 'sdc',
-    host: 'ec2-3-141-45-51.us-east-2.compute.amazonaws.com',
+    host: '3.141.45.51',
     user: 'postgres',
-    // password: 'password',
+    password: 'password',
     port: 5432,
   });
 }
