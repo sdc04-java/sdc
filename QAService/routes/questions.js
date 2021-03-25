@@ -7,8 +7,7 @@ const router = new Router();
 module.exports = router;
 
 router.route('/')
-  .get(async (req, res) => {
-    res.status(200).send('hey');
+  // .get(async (req, res) => {
     // try {
     //   const { product_id, page, count } = req.query;
     //   const first = page * count - count;
@@ -26,7 +25,10 @@ router.route('/')
     //   console.error(error);
     //   res.status(404).send(error);
     // }
-  })
+  // })
+  .get((req,res) => {
+    res.status(200).send('hey');
+    })
   .post(async (req, res) => {
     try {
       const {
