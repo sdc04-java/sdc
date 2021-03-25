@@ -30,6 +30,15 @@ const getAllReviews = ({page, count, sort, product_id}, cb) => {
   })
 };
 
+const characteristicsGetter = (id, cb) => {
+
+  pool.query(`SELECT characteristics1.char_id, product_id, char_name, characteristics2.characteristic_id, char_value  from characteristics1 LEFT JOIN characteristics2 on characteristics1.char_id = characteristics2.characteristic_id WHERE product_id = ${id}`)
+    .then((results) => {
+      cb(results);
+    })
+};
+
 module.exports = {
-  getAllReviews
+  getAllReviews,
+  characteristicsGetter
 };
