@@ -27,7 +27,7 @@ router.route('/')
     // }
   // })
   .get((req,res) => {
-    res.status(200).send('hey');
+    res.status(200).send({'hey': 'hey'});
     })
   .post(async (req, res) => {
     try {
