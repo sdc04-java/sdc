@@ -2,7 +2,7 @@ const { Pool, types } = require('pg');
 
 types.setTypeParser(1114, (stringValue) => stringValue);
 
-let pool;
+// let pool;
 
 const connectionString = 'postgresql://postgres:password@3.141.45.51:5432/sdc';
 
