@@ -8,7 +8,7 @@ const connectionString = 'postgresql://postgres:password@3.141.45.51:5432/sdc';
 
 const pool = new Pool({
   connectionString,
-})
+});
 
 // if (process.env.DATABASE_URL) {
 //   pool = new Pool({

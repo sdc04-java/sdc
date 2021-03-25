@@ -14,7 +14,7 @@ router.route('/')
       const last = page * count;
       // const results = await db.listAll(product_id);
       const results = await db.listQuestions(product_id);
-      console.log(product_id);
+      console.log(results);
       const pageCount = results.slice(first, last);
       const hasAnswers = await helper.questionAnswers(pageCount);
       const allData = await helper.questionPhotos(hasAnswers);
