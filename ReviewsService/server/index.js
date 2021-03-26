@@ -28,12 +28,23 @@ app.post("/reviews", (req, res) => {
 });
 
 app.put("/reviews/:review_id/helpful", (req, res) => {
-	let id = req.params;
-	res.status(200).send(req.params);
+	db.helpIncrementer(req.params.review_id, (err) => {
+		if (err) {
+			res.status(404).send(err);
+		} else {
+			res.status(204).end();
+		}
+	})
 });
 
 app.put("/reviews/:review_id/report", (req, res) => {
-	res.status(200).send(req.params);
+	db.reportReview(req.params.review_id, (err) => {
+		if (err) {
+			res.status(404).send(err);
+		} else {
+			res.status(204).end();
+		}
+	})
 });
 
 app.listen(port, () => {

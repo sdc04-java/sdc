@@ -8,7 +8,7 @@ const pool = new Pool({
 	port: 5432,
 });
 
-const getAllReviews = ({ page, count, sort, product_id }, cb) => {
+const getAllReviews = ({ page, count, sort = 'relevant', product_id }, cb) => {
 	let dbSorter;
 	switch (sort) {
 		case "newest":
@@ -21,10 +21,7 @@ const getAllReviews = ({ page, count, sort, product_id }, cb) => {
 		default:
 			dbSorter = "helpfulness";
 	}
-	pool
-		.query(
-			`SELECT reviewslist.review_id, rating, summary, recommend, response, body, date, reviewer_name, helpfulness, review_photos.id, url FROM reviewslist LEFT JOIN review_photos ON reviewslist.review_id = review_photos.review_id WHERE product_id = ${product_id} AND reported = false ORDER BY ${dbSorter} DESC`
-		)
+	pool.query(`SELECT reviewslist.review_id, rating, summary, recommend, response, body, date, reviewer_name, helpfulness, review_photos.id, url FROM reviewslist LEFT JOIN review_photos ON reviewslist.review_id = review_photos.review_id WHERE product_id = ${product_id} AND reported = false ORDER BY ${dbSorter} DESC`)
 		.then((results) => {
 			cb(results.rows.slice(0, count));
 		})
@@ -81,12 +78,35 @@ const metaGetter = (product_id, cb) => {
 			}
       globalObj.characteristics = charObj;
 			cb(globalObj);
-		});
+		})
+    .catch((err) => {
+      cb(err);
+    });
 };
 
-const ratingsGetter = (id, cb) => {};
+const helpIncrementer = (review_id, cb) => {
+  pool.query(`UPDATE reviewslist SET helpfulness = helpfulness + 1 WHERE review_id = ${review_id}`)
+    .then(() => {
+      cb();
+    })
+    .catch((err) => {
+      cb(err);
+    })
+};
+
+const reportReview = (review_id, cb) => {
+  pool.query(`UPDATE reviewslist SET reported = true WHERE review_id = ${review_id}`)
+    .then(() => {
+      cb();
+    })
+    .catch((err) => {
+      cb(err);
+    })
+};
 
 module.exports = {
 	getAllReviews,
 	metaGetter,
+  helpIncrementer,
+  reportReview
 };
