@@ -17,10 +17,8 @@ app.get("/", (req, res) => {
 
 app.get("/reviews/meta", (req, res) => {
 	let product_id = req.body.product_id;
-	let unshapedChars = db.characteristicsGetter(product_id, (results) => {
-		res
-			.status(200)
-			.send(results);
+	db.metaGetter(product_id, (results) => {
+		res.status(200).send(results);
 	});
 });
 
