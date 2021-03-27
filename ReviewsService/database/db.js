@@ -8,7 +8,7 @@ const pool = new Pool({
 	port: 5432,
 });
 
-const getAllReviews = ({ page, count, sort = 'relevant', product_id }, cb) => {
+const getAllReviews = ({ page, count = 5, sort = 'relevant', product_id }, cb) => {
 	let dbSorter;
 	switch (sort) {
 		case "newest":

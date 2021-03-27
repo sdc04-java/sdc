@@ -10,7 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "artillery": "^1.6.2",
+    "cors": "^2.8.5",
+    "eslint": "^7.22.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
     "express": "^4.17.1",
+    "newrelic": "^7.2.0",
     "pg": "^8.5.1"
   }
 }

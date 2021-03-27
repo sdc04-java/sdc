@@ -60,3 +60,5 @@ COPY characteristics2 (entry_id, characteristic_id, review_id, char_value)
   DELIMITER ','
   CSV HEADER;
 
+CREATE INDEX product_id_idx ON reviewslist (product_id, review_id, reported);
+

@@ -1,3 +1,4 @@
+require('newrelic');
 const express = require("express");
 const db = require("../database/db");
 
@@ -7,7 +8,7 @@ const port = 3030;
 app.use(express.json());
 
 app.get("/", (req, res) => {
-	let getObj = req.body;
+	let getObj = req.query;
 	db.getAllReviews(getObj, (results) => {
 		let finalReviewsListObj = getObj;
 		finalReviewsListObj.results = results;
@@ -16,7 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/reviews/meta", (req, res) => {
-	let product_id = req.body.product_id;
+	let product_id = req.query.product_id;
 	db.metaGetter(product_id, (results) => {
 		res.status(200).send(results);
 	});
