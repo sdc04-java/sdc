@@ -1,0 +1,176 @@
+{
+  "aggregate": {
+    "timestamp": "2021-03-22T22:23:00.888Z",
+    "scenariosCreated": 41,
+    "scenariosCompleted": 41,
+    "requestsCompleted": 41,
+    "latency": {
+      "min": 2.9,
+      "max": 19.8,
+      "median": 4.6,
+      "p95": 13.7,
+      "p99": 19.8
+    },
+    "rps": {
+      "count": 41,
+      "mean": 2.56
+    },
+    "scenarioDuration": {
+      "min": 4.6,
+      "max": 49,
+      "median": 6.1,
+      "p95": 16.9,
+      "p99": 49
+    },
+    "scenarioCounts": {
+      "Get Questions": 41
+    },
+    "errors": {},
+    "codes": {
+      "200": 41
+    },
+    "matches": 0,
+    "customStats": {},
+    "counters": {},
+    "scenariosAvoided": 0,
+    "phases": [
+      {
+        "duration": 1,
+        "arrivalRate": 1,
+        "name": "Warm up"
+      },
+      {
+        "duration": 5,
+        "arrivalRate": 2,
+        "rampTo": 2,
+        "name": "Ramp up load"
+      },
+      {
+        "duration": 10,
+        "arrivalRate": 3,
+        "name": "Sustained load"
+      }
+    ]
+  },
+  "intermediate": [
+    {
+      "timestamp": "2021-03-22T22:22:53.874Z",
+      "scenariosCreated": 21,
+      "scenariosCompleted": 21,
+      "requestsCompleted": 21,
+      "latency": {
+        "min": 2.9,
+        "max": 19.8,
+        "median": 5.3,
+        "p95": 17.1,
+        "p99": 19.8
+      },
+      "rps": {
+        "count": 21,
+        "mean": 2.34
+      },
+      "scenarioDuration": {
+        "min": 4.6,
+        "max": 49,
+        "median": 7.5,
+        "p95": 31.6,
+        "p99": 49
+      },
+      "scenarioCounts": {
+        "Get Questions": 21
+      },
+      "errors": {},
+      "codes": {
+        "200": 21
+      },
+      "matches": 0,
+      "latencies": [
+        19848167,
+        12808869,
+        5864833,
+        7977808,
+        5160830,
+        5610017,
+        5107312,
+        5631471,
+        3114392,
+        5369736,
+        2921682,
+        4395641,
+        12201702,
+        14857235,
+        5674941,
+        4141599,
+        4479541,
+        3741592,
+        5313388,
+        5278670,
+        4200810
+      ],
+      "customStats": {},
+      "counters": {},
+      "concurrency": 0,
+      "pendingRequests": 0,
+      "scenariosAvoided": 0
+    },
+    {
+      "timestamp": "2021-03-22T22:23:00.886Z",
+      "scenariosCreated": 20,
+      "scenariosCompleted": 20,
+      "requestsCompleted": 20,
+      "latency": {
+        "min": 3.2,
+        "max": 5.1,
+        "median": 4.4,
+        "p95": 5.1,
+        "p99": 5.1
+      },
+      "rps": {
+        "count": 20,
+        "mean": 2.92
+      },
+      "scenarioDuration": {
+        "min": 5,
+        "max": 6.8,
+        "median": 5.8,
+        "p95": 6.7,
+        "p99": 6.8
+      },
+      "scenarioCounts": {
+        "Get Questions": 20
+      },
+      "errors": {},
+      "codes": {
+        "200": 20
+      },
+      "matches": 0,
+      "latencies": [
+        5131476,
+        4927653,
+        4449491,
+        5100774,
+        4197694,
+        4084837,
+        4322386,
+        3161395,
+        4071927,
+        4558243,
+        4315102,
+        4418739,
+        4728529,
+        4229409,
+        4143280,
+        5129390,
+        4320077,
+        4939291,
+        4534804,
+        4128451
+      ],
+      "customStats": {},
+      "counters": {},
+      "concurrency": 0,
+      "pendingRequests": 0,
+      "scenariosAvoided": 0
+    }
+  ]
+}
