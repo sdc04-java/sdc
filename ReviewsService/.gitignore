@@ -4,4 +4,6 @@ node_modules/
 #data
 *.csv
 *.Identifier
-newrelic*
+
+#keys
+.env
